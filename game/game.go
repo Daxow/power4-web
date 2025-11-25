@@ -18,3 +18,19 @@ func NewGame() Game {
 func (g *Game) Reset() {
 	*g = NewGame()
 }
+
+func (g *Game) DropPiece(col int) int {
+	rowPlaced := -1
+	for row := len(g.Board) - 1; row >= 0; row-- {
+		if g.Board[row][col] == "" {
+			symbol := "X"
+			if g.CurrentPlayer == 2 {
+				symbol = "O"
+			}
+			g.Board[row][col] = symbol
+			rowPlaced = row
+			break
+		}
+	}
+	return rowPlaced
+}

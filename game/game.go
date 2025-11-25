@@ -7,3 +7,14 @@ type Game struct {
 	GameOver      bool
 	Message       string
 }
+
+func NewGame() Game {
+	g := Game{}
+	g.CurrentPlayer = 1
+	g.Message = "Tour du Joueur 1"
+	return g
+}
+
+func (g *Game) Reset() {
+	*g = NewGame()
+}

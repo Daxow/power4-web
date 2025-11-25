@@ -34,3 +34,11 @@ func (g *Game) DropPiece(col int) int {
 	}
 	return rowPlaced
 }
+
+func (g *Game) SwitchPlayer() {
+	if g.CurrentPlayer == 1 {
+		g.CurrentPlayer = 2
+	} else {
+		g.CurrentPlayer = 1
+	}
+}

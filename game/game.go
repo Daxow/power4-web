@@ -42,3 +42,41 @@ func (g *Game) SwitchPlayer() {
 		g.CurrentPlayer = 1
 	}
 }
+
+func (g *Game) CheckWin(row, col int) bool {
+    p := g.Board[row][col]
+    if p == "" {
+        return false
+    }
+
+    directions := [][2]int{
+        {0, 1},
+        {1, 0},
+    }
+
+    for _, d := range directions {
+        count := 1
+
+        r := row + d[0]
+        c := col + d[1]
+        for r >= 0 && r < 6 && c >= 0 && c < 7 && g.Board[r][c] == p {
+            count++
+            r += d[0]
+            c += d[1]
+        }
+
+        r = row - d[0]
+        c = col - d[1]
+        for r >= 0 && r < 6 && c >= 0 && c < 7 && g.Board[r][c] == p {
+            count++
+            r -= d[0]
+            c -= d[1]
+        }
+
+        if count >= 4 {
+            return true
+        }
+    }
+
+    return false
+}

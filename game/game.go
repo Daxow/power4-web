@@ -82,3 +82,14 @@ func (g *Game) CheckWin(row, col int) bool {
 
 	return false
 }
+
+func (g *Game) IsDraw() bool {
+	for i := 0; i < 6; i++ {
+		for j := 0; j < 7; j++ {
+			if g.Board[i][j] == "" {
+				return false
+			}
+		}
+	}
+	return true
+}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Power4 Web</title>
+    <title>Puissance 4</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -21,6 +21,11 @@
             text-align: center;
             vertical-align: middle;
         }
+        button {
+            width: 50px;
+            height: 30px;
+            margin: 2px;
+        }
         .message {
             margin-top: 15px;
             font-weight: bold;
@@ -28,7 +33,19 @@
     </style>
 </head>
 <body>
-    <h1>Power4 Web</h1>
+    <h1>Puissance 4</h1>
+
+    <form method="POST" action="/play">
+        <div>
+            <button type="submit" name="column" value="0">1</button>
+            <button type="submit" name="column" value="1">2</button>
+            <button type="submit" name="column" value="2">3</button>
+            <button type="submit" name="column" value="3">4</button>
+            <button type="submit" name="column" value="4">5</button>
+            <button type="submit" name="column" value="5">6</button>
+            <button type="submit" name="column" value="6">7</button>
+        </div>
+    </form>
 
     <table>
         {{range .Board}}

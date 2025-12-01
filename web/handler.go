@@ -56,11 +56,26 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
     }
 
     colStr := r.FormValue("column")
-    _, err = strconv.Atoi(colStr)
+    col, err := strconv.Atoi(colStr)
     if err != nil {
         http.Redirect(w, r, "/", http.StatusSeeOther)
         return
     }
+
+    if col < 0 || col > 6 {
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    rowPlaced := s.Game.DropPiece(col)
+    if rowPlaced == -1 {
+        s.Game.Message = "Cette colonne est pleine"
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    s.Game.SwitchPlayer()
+    s.Game.Message = "Tour du Joueur " + strconv.Itoa(s.Game.CurrentPlayer)
 
     http.Redirect(w, r, "/", http.StatusSeeOther)
 }

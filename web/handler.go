@@ -4,7 +4,7 @@ import (
     "html/template"
     "log"
     "net/http"
-
+    "strconv"
     "power4/game"
 )
 
@@ -27,6 +27,7 @@ func NewServer() *Server {
 
 func (s *Server) RegisterRoutes() {
     http.HandleFunc("/", s.handleIndex)
+    http.HandleFunc("/play", s.handlePlay)
 }
 
 func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -40,4 +41,26 @@ func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
         http.Error(w, "Error rendering template", http.StatusInternalServerError)
         return
     }
+}
+
+func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
+    if r.Method != http.MethodPost {
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    err := r.ParseForm()
+    if err != nil {
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    colStr := r.FormValue("column")
+    _, err = strconv.Atoi(colStr)
+    if err != nil {
+        http.Redirect(w, r, "/", http.StatusSeeOther)
+        return
+    }
+
+    http.Redirect(w, r, "/", http.StatusSeeOther)
 }

@@ -93,3 +93,4 @@ func (g *Game) IsDraw() bool {
 	}
 	return true
 }
+

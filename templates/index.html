@@ -30,10 +30,17 @@
             margin-top: 15px;
             font-weight: bold;
         }
+        .reset-button {
+            margin-bottom: 15px;
+        }
     </style>
 </head>
 <body>
     <h1>Puissance 4</h1>
+
+    <form method="POST" action="/reset" class="reset-button">
+        <button type="submit">Reset</button>
+    </form>
 
     <form method="POST" action="/play">
         <div>

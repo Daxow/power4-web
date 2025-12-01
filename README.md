@@ -25,7 +25,7 @@ power4-web/
 Dans le terminal :
 
 ```bash
-git clone <URL_DU_REPO>
+git clone https://github.com/Daxow/power4-web.git
 cd power4-web
 ```
 

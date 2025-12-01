@@ -28,6 +28,7 @@ func NewServer() *Server {
 func (s *Server) RegisterRoutes() {
 	http.HandleFunc("/", s.handleIndex)
 	http.HandleFunc("/play", s.handlePlay)
+	http.HandleFunc("/reset", s.handleReset)
 }
 
 func (s *Server) handleIndex(w http.ResponseWriter, r *http.Request) {
@@ -81,7 +82,7 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
 	if s.Game.CheckWin(rowPlaced, col) {
 		s.Game.GameOver = true
 		s.Game.Winner = s.Game.CurrentPlayer
-		s.Game.Message = "Le Joueur " + strconv.Itoa(s.Game.CurrentPlayer) + " a gagnÃ© !"
+		s.Game.Message = "Le Joueur " + strconv.Itoa(s.Game.CurrentPlayer) + " remporte la victoire !"
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
@@ -97,5 +98,15 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
 	s.Game.SwitchPlayer()
 	s.Game.Message = "Tour du Joueur " + strconv.Itoa(s.Game.CurrentPlayer)
 
+	http.Redirect(w, r, "/", http.StatusSeeOther)
+}
+
+func (s *Server) handleReset(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	s.Game.Reset()
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

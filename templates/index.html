@@ -3,9 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Power4 Web</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 40px;
+        }
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        td {
+            width: 50px;
+            height: 50px;
+            border: 1px solid #333;
+            font-size: 24px;
+            text-align: center;
+            vertical-align: middle;
+        }
+        .message {
+            margin-top: 15px;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <h1>Power4 Web</h1>
-    <p>{{.Message}}</p>
+
+    <table>
+        {{range .Board}}
+        <tr>
+            {{range .}}
+            <td>{{.}}</td>
+            {{end}}
+        </tr>
+        {{end}}
+    </table>
+
+    <div class="message">
+        {{.Message}}
+    </div>
 </body>
 </html>

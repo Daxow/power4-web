@@ -74,7 +74,7 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
 
 	rowPlaced := s.Game.DropPiece(col)
 	if rowPlaced == -1 {
-		s.Game.Message = "Cette colonne est pleine"
+		s.Game.Message = template.HTML(`Cette colonne est pleine`)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
@@ -82,7 +82,11 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
 	if s.Game.CheckWin(rowPlaced, col) {
 		s.Game.GameOver = true
 		s.Game.Winner = s.Game.CurrentPlayer
-		s.Game.Message = "Le Joueur " + strconv.Itoa(s.Game.CurrentPlayer) + " remporte la victoire !"
+		if s.Game.CurrentPlayer == 1 {
+			s.Game.Message = template.HTML(`Victoire de <span class="player-red">Joueur 1</span>`)
+		} else {
+			s.Game.Message = template.HTML(`Victoire de <span class="player-yellow">Joueur 2</span>`)
+		}
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
@@ -90,13 +94,18 @@ func (s *Server) handlePlay(w http.ResponseWriter, r *http.Request) {
 	if s.Game.IsDraw() {
 		s.Game.GameOver = true
 		s.Game.Winner = 0
-		s.Game.Message = "Match nul"
+		s.Game.Message = template.HTML(`Match nul`)
 		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
 	s.Game.SwitchPlayer()
-	s.Game.Message = "Tour du Joueur " + strconv.Itoa(s.Game.CurrentPlayer)
+
+	if s.Game.CurrentPlayer == 1 {
+		s.Game.Message = template.HTML(`À ton tour,<span class="player-red"> Joueur 1</span>`)
+	} else {
+		s.Game.Message = template.HTML(`À ton tour,<span class="player-yellow"> Joueur 2</span>`)
+	}
 
 	http.Redirect(w, r, "/", http.StatusSeeOther)
 }

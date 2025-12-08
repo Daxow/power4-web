@@ -1,17 +1,19 @@
 package game
 
+import "html/template"
+
 type Game struct {
 	Board         [6][7]string
 	CurrentPlayer int
 	Winner        int
 	GameOver      bool
-	Message       string
+	Message       template.HTML
 }
 
 func NewGame() Game {
 	g := Game{}
 	g.CurrentPlayer = 1
-	g.Message = "Tour du Joueur 1"
+	g.Message = template.HTML(`À ton tour, <span class="player-red">Joueur 1</span>`)
 	return g
 }
 

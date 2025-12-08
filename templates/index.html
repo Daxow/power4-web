@@ -1,71 +1,186 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>Puissance 4</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            text-align: center;
+            margin: 0;
+            padding: 0;
+            background: #0b1020;
+            color: #f5f5f5;
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+        }
+
+        .container {
             margin-top: 40px;
-        }
-        table {
-            margin: 0 auto;
-            border-collapse: collapse;
-        }
-        td {
-            width: 50px;
-            height: 50px;
-            border: 1px solid #333;
-            font-size: 24px;
             text-align: center;
-            vertical-align: middle;
         }
-        button {
+
+        h1 {
+            margin-top: 0px;
+            margin-bottom: 35px;
+            letter-spacing: 1px;
+            font-size: 40px;
+        }
+
+        .reset-button {
+            margin-bottom: 10px;
+        }
+
+        .reset-button button {
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: 15px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            background: #e74c3c;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .reset-button button:hover {
+            background: #c0392b;
+        }
+
+        .column-buttons {
+            margin-bottom: 10px;
+        }
+
+        .column-buttons button {
+            font-family: "Trebuchet MS", Arial, sans-serif;
+            font-size: 15px;
             width: 50px;
-            height: 30px;
-            margin: 2px;
+            height: 32px;
+            margin: 5.35px;
+            border-radius: 12px;
+            border: none;
+            background: #2980b9;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
         }
+
+        .column-buttons button:hover {
+            background: #1f5f86;
+        }
+
+        table.board {
+            margin: 0 auto;
+            border-collapse: separate;
+            border-spacing: 6px;
+            padding: 14px;
+            border-radius: 18px;
+            background: #004b9a;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.6);
+        }
+
+        table.board td {
+            padding: 0;
+        }
+
+        .slot {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #003a78;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow:
+                inset 0 0 6px rgba(0, 0, 0, 0.6),
+                0 3px 4px rgba(0, 0, 0, 0.4);
+        }
+
+        .token {
+            width: 46px;
+            height: 46px;
+            border-radius: 50%;
+            box-shadow: inset 0 0 4px rgba(255, 255, 255, 0.4);
+        }
+
+        .token-red {
+            background: #e74c3c;
+        }
+
+        .token-yellow {
+            background: #f1c40f;
+        }
+
+        .token-empty {
+            background: #001c3d;
+        }
+
         .message {
-            margin-top: 15px;
+            margin-top: 20px;
+            font-weight: bold;
+            min-height: 24px;
+            font-size: 25px;
+        }
+
+        .player-red {
+            color: #e74c3c;
             font-weight: bold;
         }
-        .reset-button {
-            margin-bottom: 15px;
+
+        .player-yellow {
+            color: #f1c40f;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
-    <h1>Puissance 4</h1>
+    <div class="container">
+        <h1>Puissance 4</h1>
 
-    <form method="POST" action="/reset" class="reset-button">
-        <button type="submit">Reset</button>
-    </form>
+        <form method="POST" action="/reset" class="reset-button">
+            <button type="submit">Réinitialiser</button>
+        </form>
 
-    <form method="POST" action="/play">
-        <div>
-            <button type="submit" name="column" value="0">1</button>
-            <button type="submit" name="column" value="1">2</button>
-            <button type="submit" name="column" value="2">3</button>
-            <button type="submit" name="column" value="3">4</button>
-            <button type="submit" name="column" value="4">5</button>
-            <button type="submit" name="column" value="5">6</button>
-            <button type="submit" name="column" value="6">7</button>
-        </div>
-    </form>
+        <form method="POST" action="/play">
+            <div class="column-buttons">
+                <button type="submit" name="column" value="0">1</button>
+                <button type="submit" name="column" value="1">2</button>
+                <button type="submit" name="column" value="2">3</button>
+                <button type="submit" name="column" value="3">4</button>
+                <button type="submit" name="column" value="4">5</button>
+                <button type="submit" name="column" value="5">6</button>
+                <button type="submit" name="column" value="6">7</button>
+            </div>
+        </form>
 
-    <table>
-        {{range .Board}}
-        <tr>
-            {{range .}}
-            <td>{{.}}</td>
+        <table class="board">
+            {{range .Board}}
+            <tr>
+                {{range .}}
+                <td>
+                    {{if eq . "X"}}
+                        <div class="slot">
+                            <div class="token token-red"></div>
+                        </div>
+                    {{else if eq . "O"}}
+                        <div class="slot">
+                            <div class="token token-yellow"></div>
+                        </div>
+                    {{else}}
+                        <div class="slot">
+                            <div class="token token-empty"></div>
+                        </div>
+                    {{end}}
+                </td>
+                {{end}}
+            </tr>
             {{end}}
-        </tr>
-        {{end}}
-    </table>
+        </table>
 
-    <div class="message">
-        {{.Message}}
+        <div class="message">
+            {{.Message}}
+        </div>
     </div>
 </body>
 </html>

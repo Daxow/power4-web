@@ -1,8 +1,13 @@
-# **Puissance 4**
+<div align="center">
+   
+   # **Puissance 4**
+   Un petit projet permettant de jouer au Puissance 4 directement dans le navigateur à l’aide d’un serveur web codé en Go.
+   
+</div>
 
-Un petit projet permettant de jouer au Puissance 4 directement dans le navigateur à l’aide d’un serveur web codé en Go.
-
---------------------
+<p align="center">
+   <img width="388" height="425" alt="image" src="https://github.com/user-attachments/assets/54796125-0096-46c6-821a-d35dbccc18b3" />
+</p>
 
 ## **Structure du projet**
 
